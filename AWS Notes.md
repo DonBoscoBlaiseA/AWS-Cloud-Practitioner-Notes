@@ -100,8 +100,8 @@ AWS Local Zones: Edge datacenters outside of AWS region. Allows compute closer t
 
 Cost Mangement: How to save money?
 Capacity Management: How do we meet the demand of traffic and usages by adding or upgrading servers
-EC2 Spot Instances: Buying spare EC2 capacity for a discount, capacity can be taken back anytime if AWS needs it
-EC2 Reserved Instances: Reserve to use specific instance type in specific region for 1 or 3 years. Payment can be Full upfront, Partial upfront or Monthly
+EC2 Spot Instances (up to 90% off): Buying spare EC2 capacity for a discount, capacity can be taken back anytime if AWS needs it
+EC2 Reserved Instances (up to 75% off): Reserve to use specific instance type in specific region for 1 or 3 years. Payment can be Full upfront, Partial upfront or Monthly
 EC2 Savings Plan: Commit to spend a fixed amount of $ per hour on compute for 1 or 3 years. Can change region, instance (flexible)
 AWS Batch: To run batch computing jobs that dont require user interaction. Can utilize Spot instances or On-Demand
 AWS Compute Optimizer: ML is used to suggest how to save money and improve performance, by analyzing previous usage history
@@ -218,3 +218,67 @@ ASG working: ASG uses template to create the number of EC2 instances we want. If
 
 ALB working: Since every instance has different IPV4, we need a common point, so we use DNS of ALB(also distributes traffic across instances). A target group should be created with health check parameters. Select the instances for target group(Or you can also add the ALB inside ASG). Add the target group to ALB. You can enable ELB health check in the ASG after adding ALB. Point route 53 to ALB dns
 
+EC2 Pricing: On-Demand: Default EC2 pricing. Mostly charged by the second(but cost is shown as hourly), rarely by the hour. Used for short term, unpredictable experiments. After you know how much resourse it takes, you can buy reserved
+
+Reserved Instances(RI): Used when you have a steady or predictable usage. Reduced pricing is based on Term, Class, RI Attributes and Payment options
+Term: Commit to 1 or 3 year contract, when term expires, instance will be turn back to on-demand with no interruptions
+Class: Standard(up to 75% lower price compared to on-demand, can modify RI attributes). Convertible(up to 54% lower price comapred to on-demand, can exchange RI based on RI attributes)
+Payment options: All upfront, partial upfront, no upfront
+*RIs can be shared between multiple accounts withing AWS organization. Unused RIs can be sold in Reserved Instance Marketplace
+
+RI Attributes or Instance Attributes:
+![RI Attributes](image-10.png)
+
+Regional and Zonal RI: Scope of the RI
+![Regional and Zonal RI](image-11.png)
+
+RI Limits: There is a limit to the number of RI instances you can purchase per month
+20 Regional Reserved Instances per Region, 20 Zonal Reserved Instances per AZ
+Regional Limits: You cannot exceed the running on-demand instance limit by purchasing Regional Reserved Instances. The limit is by 20
+Zonal Limits: You can exceed the running on-demand instance limit by purchasing Zonal Reserved Instances. Eg. If you have 20 running on-demand instances and you purchase 20 Zonal Reserved Instances for an AZ, you can purchase 20 more on-demand instances for that AZ with same specification of Zonal Reserved Instances
+
+Difference between Regional and Zonal: Purchasing Regional RI just means, you know the capacity you need in the region, so you get a discount. If you dont know the capacity you need, you can go on-demand and get no discount. Regional RI doesnt allot a slot for you in the region(Zonal RI allots slot for you in one AZ). You dont get guarantee of slot in the region, you just get discount because you know the capacity you need. Whereas, Zonal RI guarantees a slot in the specific AZ, so you can run more instances in that slot, even if the limit of 20 is reached
+
+Capacity Reservation: Since EC2 instances are backed by hardware, they can sometimes run out of capacity to launch your new EC2 instance(only can have finite amount of servers)
+By using capacity reservation, you can reserve a capacity ahead of time(AWS will remove your reserved capacity from shared instance pool and put your name on it). You will be charged on-demand instance price even if no instances are running in the reserved space
+
+Standard RI vs Convertible RI:
+![Standard vs Convertible RI](image-12.png)
+
+RI Marketplace:
+![RI Marketplace](image-13.png)
+
+Dedicated Instances: Multi-Tenant(shared hardware with software isolation) and Single Tenant(physical isolation. Can be used for BYOL softwares)
+![Dedicated Instances](image-14.png)
+
+AWS Savings Plan: Similar discounts as RI but simplified purchasing process. There are 3 types of savings plan: Compute savings plan, EC2 instance savings plan, sagemaker savings plan(simpler than RI. i.e. no need to choose between standard/convertible, regional/zonal etc.)
+![Savings Plan](image-15.png)
+*Sagemaker is EC2 for ML
+
+Zero Trust Model: Trust no one, verify everything. Identity is the primary security perimeter(first line of defense) in zero trust model. Old way used Network Centric: Focused on firewalls and VPNs to secure data. Eg. data cant be accessed from locations which are outside of premise. New way uses Identity Centric: Where no matter where you are(on premise or outside premise), needs to authenticate inorder to access data(no trust given, even if on premise). Identity Centric way augments Network centric way
+
+Zero Trust on AWS: Set up by using Identity controls, i.e. IAM. Using IAM, you can restrict users based on ip, time, region, MFA present and also set boundaries. Eventhough AWS has these options to set zero trust for users, it is manual and not intelligent ready-to-use solution. Collection of AWS services can be used to make an intelligent-ish security. Eg. AWS Cloudtrail which tracks API calls -> Amazon GuardDuty which detects suspicious activity based on cloudtrail and other logs -> Amazon Detective which can analyze and identity security issues from GuardDuty (very hard to setup)\
+
+Third Party Solution for Zero Trust:
+![Third Party Zero Trust](image-16.png)
+
+Directory Service: It maps the names of network resources to their network address
+![Directory](image-17.png)
+
+Active Directory: Access multiple infrastructure devices with one identity(each user has one identity)
+![Active Directory](image-19.png)
+
+Identity Provider IdP:
+![Identity Providers](image-18.png)
+
+Single-Sign-On(SSO): Authentication scheme that allows a user to login to different systems with single ID and password. Login for SSO is seamless, i.e. Once a user is logged into the primary directory, they are not asked to login multiple times in different sites. Eg. If you are logged into the primary directory, you can log in to many services like aws, slack, google workspace, salesforce, devices etc. with logging into each of them
+
+Its how a organizations computer asks user ID and password when logging into the computer and uses the same information to log you in to multiple independent services like aws, google workspace etc. The Active Directory has your user ID and the list of services you have access to like aws, google workspace etc
+
+LDAP(lightweight Directory Access Protocol): It enables same-sign on, which allows users to use single ID and password but they have enter it every time they want to login
+![LDAP](image-20.png)
+
+AWS X-Ray, AWS Partner Network (APN), AWS Global Acclerator, AWS Cost Explorer, AWS Budgets, AWS License Manager, AWS Launch Wizard (Enterprise applications that may require complex configurations and architecture), AWS Marketplace (Purchasing and deploying third-party software solutions on AWS, Streamlined billing and payment through existing AWS accounts, Curated catalog of enterprise-class software)
+
+Policy: Rules for users
+Roles: Rules for services. Eg. EC2 can access certain S3 bucket
