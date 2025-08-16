@@ -3,6 +3,7 @@
 
 IAM(Identity and Access Management): add users, groups, policies etc (Amazon Linux 2 + t2 micro cpu are free tier)
 Amazon Route 53: DNS
+Amazon Resource Name (ARN) uniquely identifies AWS resources
 
 Geographical Regions: US
 Regions: US-EAST, US-WEST
@@ -69,7 +70,7 @@ AWS Network is the backbone for global infrastructure, EC2 is backbone for servi
 VM: AWS LightSail is a managed virtual server service, easy version of EC2 VM
 
 Containers: Virtualizing an OS, to run multiple workloads on a single OS instance, used in microservice arch
-ECS is a container orchestration service. Launches a cluster of servers on EC2 instances with Docker installed (When you need Docker as a Service, or need to run containers)
+ECS is a container orchestration service. Creating an ECS cluster with EC2 launch type(instead of fargate), creates an EC2 instance with the same instance type(t2 micro) specified in ECS creation process. Task definition defines the container image and required vCPU and ram. After this every task or service we run on the cluster, runs inside the EC2 instance.
 ECR(Elastic Container Registry) is a repository for container images. To launch a container, you need an image(a saved copy). Repository is just a storage with version control.
 ECS Fargate is a serverless container orchestration service. Same as ECS except you pay-on-demand per running container (with ECS, you have to keep a EC2 server running even if you have no containers running)
 EKS(Elastic Kubernetes Service) is a fully managed Kubernetes Service. Kubernetes is an open source orchestration software. Used when you need to run Kubernetes as a Service
@@ -79,7 +80,7 @@ Serverless: AWS Lambda: serverless functions service. Can run code without provi
 
 ECS Creation:
 i. Create Cluster (Cluster is a container playground, where you can add tasks, services etc. Its like a template)
-ii. Make a task definition (blueprint  that tells specific containers to run, how much CPU/memory each gets)
+ii. Make a task definition (blueprint  that tells specific containers to run(can specify the container image), how much CPU/memory each gets)
 iii. Add a task or service in the created cluster, which uses the created task definition.
 Task: Run this program once
 Service: Keep this program running forever, with X copies, and restart it if it crashes
@@ -210,7 +211,7 @@ Create AMI and launch templates: Creating an AMI is like making a copy of an EC2
 
 Autoscaling Group(ASG) to EC2: Add 3 AZ for availability and you can set it to scale based on different parameters like CPU utilization at 50%
 
-Load Balancer(ALB): It will check the target group(list of instances). Create target group and set health check. It will check the website and if it doesnt get 200 OK signal, it will send traffic to another healthy instance. The number of times it can fail to consider the site unhealthy and the number of times it can succeed to consider the site healthy can be set. Add Load Balancer to ASG. Use DNS of load balancer to access the website instead of ip of instance. Add load balancer dns to route 53, to use load balancer when accessing website
+Application Load Balancer(ALB): It will check the target group(list of instances). Create target group and set health check. It will check the website and if it doesnt get 200 OK signal, it will send traffic to another healthy instance. The number of times it can fail to consider the site unhealthy and the number of times it can succeed to consider the site healthy can be set. Add Load Balancer to ASG. Use DNS of load balancer to access the website instead of ip of instance. Add load balancer dns to route 53, to use load balancer when accessing website
 *ASG always used together with ALB, because ALB acts as the entry point
 
 Connecting ASG and ALB:
@@ -278,7 +279,62 @@ Its how a organizations computer asks user ID and password when logging into the
 LDAP(lightweight Directory Access Protocol): It enables same-sign on, which allows users to use single ID and password but they have enter it every time they want to login
 ![LDAP](image-20.png)
 
+####
 AWS X-Ray, AWS Partner Network (APN), AWS Global Acclerator, AWS Cost Explorer, AWS Budgets, AWS License Manager, AWS Launch Wizard (Enterprise applications that may require complex configurations and architecture), AWS Marketplace (Purchasing and deploying third-party software solutions on AWS, Streamlined billing and payment through existing AWS accounts, Curated catalog of enterprise-class software)
 
-Policy: Rules for users
-Roles: Rules for services. Eg. EC2 can access certain S3 bucket
+Policy: Rules for users, services and groups (Eg. Policy to list objects(or all actions in s3) from all or specific S3 bucket). A document (JSON) that defines what actions are allowed/denied on which resource
+Roles: Create a role for services and attach the rules(policy) to it. Eg. Attach policy to list objects from specific S3 bucket to the EC2 IAM role (Now you can connect to EC2 and use commands like 'aws s3 ls' to list buckets)
+*There are also inbuilt policies that you can attach to services using roles like SSM
+
+Principal of Least Priviledge (PoLP): Just-Enough-Access(JEA): Least permissions to perform an action, Just-In-Time(JIA) Least duration to perform an action (use open-source project ConsoleMe to implement JIA)
+Risk-based adaptive policies
+
+Messaging Systems:
+Queueing: It is a messaging system that generally will delete messages once they are consumed. Simple communication. No Real time
+AWS Simple Queueing Service(SQS): Fully managed queueing service that enables you to decouple and scale microservices
+Working: Service A does its job and passes the message in queue. Service B can pick the message later. Service A and B dont need to be running at the same time waiting for the message (Thus its decoupled)
+
+Streaming: Its the opposite of Queueing. Here mutiple consumers(Service B, C, D getting data from Service A) can react to events(messages). Event is live in the stream for long time, so multiple operations can be applied. Real time. Costs more than queueing. Consumers read data at their own pace. Messages are stored in the stream for 24 hours. Customers can re-read messages
+Amazon Kinesis:
+![Streaming](image-21.png)
+
+Pub/Sub: Senders (Publishers) send messages to Even Bus, Even Bus categorizes messages into groups, Receivers(Subscribers) are subscribers to those groups(Topic), and get messages delivered to them immediately. Eg. Sending message to a chat group and getting the message delivered to everyone in real time
+AWS Simple Notification Service(SNS): Fully managed Pub/Sub messaging service that enables you to decouple microservices
+![Pub/Sub](image-22.png)
+![SNS](image-23.png)
+
+Amazon API Gateway: Fully managed service to create, publish, maintain, monitor and secure APIs. It acts as a bridge between your clients (mobile apps, browsers, IoT devices) and your backend (Lambda, EC2, DynamoDB, S3, etc). Automatically handles Authentication & Authorization(OAuth), Rate limiting & throttling(protect backend from overload), Caching, Monitoring(Cloudwatch integration), Auto scaling(Handles more requests). When client send a api request, it checks the resource '/product' and method 'GET' match the request and route it to perform specific operations on AWS services. Eg. /products fetches list of products from DynamoDB. API Gateway can transform raw DynamoDB/Lambda response into a clean JSON response
+
+State Machine: A model which decides how one state moves to another based on conditions. Like a flow chart
+AWS Step Functions: When you want multiple AWS services to execute in a serverless workflow one after another. Retry a step if there are any errors. Visualize each service as steps in the workflow
+![Step Functions](image-24.png)
+
+Event Bus: Similar to Streaming
+AWS EventBridge(formerly CloudWatch Events): Serverless event bus service used for application integration by streaming real time data to applications
+Every service already uses event bus(default event bus) Eg. Creating an EC2 instance places an event the event bus. Event bus is the one which holds the event data and rules(like a pipeline) to deliver to Consumers. Producer are creators of events like EC2, S3 etc. Consumers are the target of events. Events are JSON objects that travel in the event bus
+There is also Custom Event Bus for custom rules and events(can also be scoped to work with multiple AWS accounts. Eg. event creation from another AWS account), there is Third Party Event Bus (SaaS vendors like shopify can integrate with EventBridge. Allows them to create event and place it on the event bus when a order happens)
+![EventBridge](image-25.png)
+
+Amazon MQ: Managed message broker service that uses Apache ActiveMQ
+Managed Kafka Service(MSK): Fully managed Apache Kafka Service. Open source streaming service
+AppSync: Fully managed GraphQL service. Open source query adapter that allows you to query data from many different data sources
+
+VMs vs Containers: Host OS use Hypervisor to run different softwares on one VM(all softwares share same space, you pay for whole VM even if you are not using some space(Eg. ECS with EC2 instance launch type)). Whereas, Host OS can use Docker daemon to run multiple softwares separately in containers(No conflict between softwares, in fargate you only pay for running the containers so you are not paying for space you dont need)(If containers do need space, they can scale up)(Eg. ECS with Fargate launch type)
+![VMs vs Containers](image-26.png)
+
+Monolithic(tightly coupled) vs Microservices Architecture(loosely coupled, functionality is isolated):
+![Monolithic vs Microservices](image-27.png)
+
+Kubernetes or K8: Open source container orchestration service(like ECS) for automating deployment, scaling and management of containers. Advantage of Kubernetes over Docker, is the ability to run containers across multiple VMs. Pods in Kubernetes are a group, with one or more containers sharing storage, network etc. Kubernetes is best for companies with microservice architecture to manage 'tens to hundreds' of services
+
+Docker: Set of PaaS products, that use OS level virtualization to deliver software in packages called containers
+Products are Docker CLI(cli commands to download, upload, build and run containers), Docker file(a config file on provisioning containers), Docker Compose(Config file when working with multiple containers), Docker Swarm(To manage multi container architectures), Dockerhub(Public repository)
+Open Container Initiative(OCI): Standard for containers
+
+Podman: OCI compliant Docker alternative. Can use poda like K8. Used alongside Buildah(tool to build OCI images), Skopeo(Tool for moving container images between different types of container storages(moving remote containers to local))
+
+App Runner: PaaS specifically for containers
+X-Ray: Analyze and debug between microservices(In microservices, many small services talking to each other so its hard to debug. You can trace and see how requests pass through each microservice and find where more time is spent)
+
+AWS Organizations: Organiztional Units(OU)
+![AWS Organizations](image-28.png)
