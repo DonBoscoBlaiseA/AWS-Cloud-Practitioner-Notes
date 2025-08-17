@@ -338,3 +338,9 @@ X-Ray: Analyze and debug between microservices(In microservices, many small serv
 
 AWS Organizations: Organiztional Units(OU)
 ![AWS Organizations](image-28.png)
+
+AWS Config: Compliance as Code framework to monitor, enforce and remediate changes. Tracks all resources in the region. Tracks changes(history of changes). Can use custom rules or conformance packs(premade compliance rules). Can also set remediation process(manual or auto)(can also set a lambda)
+
+AWS QuickStarts: Prebuilt templates to deploy wide range of stacks like QnA bot. It is a Cloudformation template. Provides architecture diagram and guide about the architecture. Takes less than a hour to deploy
+
+Tag: It is a key value pair that you can assign to aws resources. Eg. Name = MyS3Bucket
