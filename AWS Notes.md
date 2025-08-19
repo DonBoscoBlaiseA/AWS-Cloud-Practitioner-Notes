@@ -132,7 +132,7 @@ S3 Config: After turning on encryption of objects in S3 Bucket. If any hacker st
 EBS is under EC2 service. Can be added when creating EC2
 EFS can be set to regional or one-Zone. Can be added when creating EC2
 
-Data Warehouse: Performs aggregation on million of rows of data, to get analytical reports. Aggregation is grouping data. They are "HOT, meaning they can return queries fast, but are only uses once or twice a day to get analytical reports. Data warehouse is built for reporting, trend analysis, and decision-making. It needs to be consume relational data on a regular basis, or else the data will become outdated for reports
+Data Warehouse: Performs aggregation on million of rows of data, to get analytical reports. Aggregation is grouping data. They are "HOT", meaning they can return queries fast, but are only uses once or twice a day to get analytical reports. Data warehouse is built for reporting, trend analysis, and decision-making. It needs to be consume relational data on a regular basis, or else the data will become outdated for reports
 
 Key-value database: NoSQL database, fast but lacks relationship, indexes, aggregation. Value can be represented as dictionary. This can resemble a tabular database, but not every row will have every column
 ![Key-value DB](image-3.png)
@@ -145,12 +145,12 @@ DocumentDB: NoSQL document database (Used when you want to use MongoDB like data
 Amazon Keyspaces: NoSQL database (When you want to use Apache Cassandra database)
 
 Relational Database Services in AWS:
-RDS: Relational Database Service. Supports several SQL engines like MySQL, MariaDB(fork of MySQL), Potgres, Oracle, MsSQL, Aurora
+RDS: Relational Database Service. Supports several SQL engines like MySQL, MariaDB(fork of MySQL), Postgres, Oracle, MsSQL, Aurora
 Aurora: Fully managed database of either MySQL or Postgres(When you need highly available, scalable, durable, secure relational db for MySQL or Postgres)
 Aurora Serverless: Serverless on-demand version of Aurora(autoscaling, can pause when not in use and save money). Startup latency when resuming from pause
 RDS on VMware: When you want to deploy RDS supported SQL engines on-premise. On-premise datacenter must be using VMware for server virtualization
 
-Redshift: Data Warehouse in AWS (petabyte-size data warehouse)
+Redshift: Data Warehouse in AWS (petabyte-size data warehouse). Datawarehouses for Online Analytical Processing(OLAP)
 ElasticCache: Managed database of the in-memory and caching databases like Redis or Memcached (Improve performance of application by adding a caching layer in-front of web-server or database)
 Neptune: Managed graph database. Data is represented as interconnected nodes (When you need to understand connection between data)
 Amazon Timestream: Time series database. Eg. IOT devices send time sensitive information
@@ -254,7 +254,7 @@ Dedicated Instances: Multi-Tenant(shared hardware with software isolation) and S
 
 AWS Savings Plan: Similar discounts as RI but simplified purchasing process. There are 3 types of savings plan: Compute savings plan, EC2 instance savings plan, sagemaker savings plan(simpler than RI. i.e. no need to choose between standard/convertible, regional/zonal etc.)
 ![Savings Plan](image-15.png)
-*Sagemaker is EC2 for ML
+*Sagemaker is EC2 for ML(to build, train and deploy ML models)
 
 Zero Trust Model: Trust no one, verify everything. Identity is the primary security perimeter(first line of defense) in zero trust model. Old way used Network Centric: Focused on firewalls and VPNs to secure data. Eg. data cant be accessed from locations which are outside of premise. New way uses Identity Centric: Where no matter where you are(on premise or outside premise), needs to authenticate inorder to access data(no trust given, even if on premise). Identity Centric way augments Network centric way
 
@@ -344,3 +344,57 @@ AWS Config: Compliance as Code framework to monitor, enforce and remediate chang
 AWS QuickStarts: Prebuilt templates to deploy wide range of stacks like QnA bot. It is a Cloudformation template. Provides architecture diagram and guide about the architecture. Takes less than a hour to deploy
 
 Tag: It is a key value pair that you can assign to aws resources. Eg. Name = MyS3Bucket
+
+Resource Groups: Grouping resources with tags in organization. Can set tag policies to standardize tags in the organization
+
+Business Centric Services:
+Amazon Connect: Virtual call center service. Can create workflow(flow path) to route callers, record calls. Same system that AWS call centre uses
+Workspaces: Virtual remote desktop service. Instead of sending hardware to employees to work from home, they can access it via cloud
+WorkDocs: Shared collaboration service to share files and folders. Similar to SharePoint
+Chime: Video conference service. Similar to Zoom. Can have multiple users on a call
+WorkMail: Managed business email, contacts and calender service
+Pinpoint: Marketing campaign management service. Used for sending targeted email via SMS, push notification, voice messages
+Simple Email Service(SES): Transactional email service. Integrate with app to send emails
+QuickSight: Business Intelligence(BI) service. Connect multiple data sources and quickly visualize date in the form of graphs with no programming knowledge
+
+Provisioning Services: Provisioning means allocation or creation of resources to customers. AWS Provisioning Services are responsible for setting up and then managing those services
+Elastic Beanstalk(EB, PaaS), AWS OpsWorks(configuration management service, also provides managed instances of open source configuration management software Chef and Puppet), CloudFormation(IaC, Infrastructure modelling and provisioning service), AWS QuickStarts(Cloudformation templates authorized by community or AWS), AWS Marketplace(Provision resource from marketplace), AWS Amplify(Mobile and web application framework, will provision multiple AWS services as backend), App Runner(quickly deploy containarized web application and APIs), AWS Copilot(CLI that allows to quickly launch and manage containerized app, CI/CD pipelines), AWS CodeStar(accelerates application delivery by providing a pre-configured continuous delivery toolchain), AWS Cloud Development Kit(IaC, same as CloudFormation but it allows to use several programming languages instead of JSON and YAML used in CloudFormation templates, generates CloudFormation template as result)
+
+Elastic Beanstalk: Powered by CloudFormation templates. Eg. Create Ruby running on Linux with LB, Monitoring, Heath, Alarms etc. (Just upload code and deploy)
+
+Serverless: When underlying servers, infrastructure and OS are managed by CSP. Pay for what you use, so cost effective. Scalable and highly available. Eg. DynamoDB, S3, ECS Fargate, AWS Lambda, Step Functions, Aurora Serverless(has cold start), SQS, SNS etc.
+
+Windows on AWS: EC2: latest windows version is Windows Server 2019, SQL Server on RDS, AWS Directory Service(Microsoft Active Directory as a service), AWS Licence Manager(manage licenses from vendors), Amazon FSx(for Windows file server), AWS SDK(supports .NET), Amazon Workspaces(remote Windows Desktop), AWS Lambda(supports Powershell as a programming language), AWS Migration Acceleration Program(MAP)(for windows, to move large enterprises)
+
+AWS License Manager: BYOL, the process of reusing an existing software license to run vendor's software on a cloud vendor's computing service. Can set vCPU, sockets etc that is allowed in license. Manager works with EC2 and RDS. For Microsoft windows server and Microsoft sql server license you generally need to use a Dedicated Host, because of Assurance program
+
+Logging Services: CloudTrail(all API calls between AWS services), CloudWatch has many services underneath it like CloudWatch Logs(Used to view logs pushed to it), CloudWatch Metrics, EventBridge(trigger event based on condition like take snapshot og server every hour), CloudWatch Alarms(triggers alarms based on metrics), CloudWatch Dashboard(Visualalizations based on metrics), AWS X-Ray
+
+AWS CloudTrail: 
+![CloudTrail](image-29.png)
+![Event History](image-30.png)
+Event History stores last 90 days, more than that, you need to create a Trail and analyze it using Amazon Athena
+Trails in CloudTrail: You can set to capture events you want(Management, Data, Insights) and store them in s3(can also send push it to CloudWatch Logs, then we can see logs real time and set Alarms, Metric Filters etc.)
+
+CloudWatch Alarm:
+![CloudWatch Alarm](image-31.png)
+![Alarm Anatomy](image-32.png)
+Alarm has Metric, Threshold Condition, Data point, Period, Period evaluation, Datapoints to alarm
+
+CloudWatch Logs:
+![CloudWatch Logs](image-33.png)
+
+ML and AI services in AWS:
+Amazon SageMaker, Amazon SageMaker Ground Truth(data labelling service, have humans label dataset)
+Amazon Augmented AI: Implement human review of ML predictions
+
+Machine Learning and AI Services:
+![ML % AI Services](image-34.png)
+![ML % AI Services](image-35.png)
+
+Big Data and Analytics Services:
+Big data: massive volume of structured/unstructured data that is so large to move and process using traditional databases
+![Big Data and Analytics](image-36.png)
+![Glue, Data Lake](image-37.png)
+
+QuickSight: Uses SPICE(Superfast, Parallel, In-memory, Calculation Engine) to achieve blazing fast performance at scale. QuickSight ML Insights: Forecasting, detect anomalies etc, QuickSight O: Ask questions using natural language on all your data and receive answer in seconds
