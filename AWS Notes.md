@@ -389,12 +389,16 @@ Amazon SageMaker, Amazon SageMaker Ground Truth(data labelling service, have hum
 Amazon Augmented AI: Implement human review of ML predictions
 
 Machine Learning and AI Services:
-![ML % AI Services](image-34.png)
-![ML % AI Services](image-35.png)
+![ML & AI Services](image-34.png)
+![ML & AI Services](image-35.png)
+![BedRock & CodeWhisper](image-38.png)
 
 Big Data and Analytics Services:
 Big data: massive volume of structured/unstructured data that is so large to move and process using traditional databases
 ![Big Data and Analytics](image-36.png)
 ![Glue, Data Lake](image-37.png)
 
-QuickSight: Uses SPICE(Superfast, Parallel, In-memory, Calculation Engine) to achieve blazing fast performance at scale. QuickSight ML Insights: Forecasting, detect anomalies etc, QuickSight O: Ask questions using natural language on all your data and receive answer in seconds
+QuickSight: Uses SPICE(Superfast, Parallel, In-memory, Calculation Engine) to achieve blazing fast performance at scale. When you to import s3 data, excel(xlsx), csv etc, instead of querying the database each time to get insights, SPICE stores the data in-memory for faster results(Best for building dashboards like in PowerBI). QuickSight ML Insights: Forecasting, detect anomalies etc, QuickSight O: Ask questions using natural language on all your data and receive answer in seconds
+
+Machine Learning Frameworks:
+![ML Frameworks](image-39.png)
