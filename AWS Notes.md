@@ -156,6 +156,8 @@ Neptune: Managed graph database. Data is represented as interconnected nodes (Wh
 Amazon Timestream: Time series database. Eg. IOT devices send time sensitive information
 Amazon Quantum Ledger Database: Ledger database (Transparent, immutable, cryptographically variable logs)(Used for financial information that can be trusted)
 DMS(Database Migration Service): Move from on-premise to AWS, SQL to NoSQL, etc
+![DMS]({23B78B30-BC9C-4415-9226-07CD1D0FF191}.png)
+AWS Schema Conversion Tool: Used to automatically convert a source database schema to a target database schema
 
 Cloud Native Networking Services:
 ![Cloud Network](image-4.png)
@@ -166,7 +168,7 @@ Enterprise/Hybrid Networking:
 VPC and Subnets:
 ![VPC and Subnets](image-6.png)
 
-NACL(Netowrk Access Control List) and Security Groups:
+NACL(Network Access Control List) and Security Groups:
 ![NACL and Security Groups](image-7.png)
 
 Network Config: Create a VPC with CIDR of /16, then create a subnet inside it with CIDR /24, now there is only one route in the subnet i.e to local, so create internet gateway and add it in route table with CIDR /0, now you can create an EC2 with the created VPC and subnet. You can add security groups in EC2 to allow SSH, TCP etc., You can also use NACL in VPC to block particular ip or allow connections etc., in security groups and NACL, type means to block SSH or ALL TCP connections coming from specific ip. Set rule number in NACL as multiples of 10
@@ -402,3 +404,59 @@ QuickSight: Uses SPICE(Superfast, Parallel, In-memory, Calculation Engine) to ac
 
 Machine Learning Frameworks:
 ![ML Frameworks](image-39.png)
+
+Intel Hardwares in AWS: Intel Xeon and Intel Habana Gaudi(AI training processor, competitor to NVIDIA)
+
+AWS has lots of whitepapers, and Well Architected Framework is one of them
+AWS Well Architected Framework: A whitepaper(guide/manual) to help customers build using best practices defined by AWS. There are 6 pillars
+![Pillars]({DB7E3E58-D789-4C91-9B97-75256A21C52C}.png)
+6th Pillar: Sustainability(reducing environmental impact, running serverless instead of always on EC2)
+![On-Premise vs AWS Team Structure]({47FDECA1-166F-4977-A042-30111A90D931}.png)
+![Amazon Leadership Principles]({2A037396-6D5D-4027-9D9D-D34A902F9116}.png)
+![General Design Principles]({92143AC2-EF53-4BCA-B699-6B803D51CAFE}.png)
+![Anatomy of a Pillar]({67E99691-E37B-4D3F-AE1A-3DFE133C690F}.png)
+
+![Operational Excellence Design Principles]({504B80BA-9DEF-469B-B0F9-9A21BDC5B807}.png)
+![Security Design Principles]({FF57F500-A324-44E9-8200-062E623F1BC9}.png)
+![Reliability Design Principles]({48960E39-396D-41AE-83D7-2907778738E8}.png)
+![Performance Efficiency Design Principles]({0DA02F5F-9908-4B20-947C-BD0CAE75E8EE}.png)
+![Cost Optimization Design Principles]({6E5BBD9D-3BF9-4822-976B-E51817D9E6AE}.png)
+
+Well Architected Tool: Its an auditing tool to assess your cloud workload for alignment with the AWS Well Architected Framework. Its a checklist for best practices
+![AWS Architecture Center]({DD8E51D3-545C-4300-B456-558C3D7F6F3D}.png)
+
+TCO: Total Cost of Ownership(A financial estimate intented to determine the direct and indirect cost of a product or service). Eg. Direct and Indirect cost when moving from on-premise to cloud
+![Cloud Migration]({0E6FEA79-3F9A-4DDE-A7BA-FA6AA8419C41}.png)
+Migration Cost Spikes but Operational Costs come down over time
+
+Capital Expenditure(CAPEX): (On-premise) Spending money upfront on physical infrastructure. You can get tax breaks(Eg. if you buy server for 100rs and the life of the server is 5 years, then the annual depreciation is 20rs, i.e. 100/5 = 20, so you can file 20rs depreciated each year as expense(loss) and lower taxable income(profit))
+Operational Expenditure(OPEX): (Cloud) Only need to spend operational cost of cloud like software licenses, cloud bills. Can try a product without investing in equipment
+
+![Does Migration make IT personal redundant?]({FFFD92DB-8480-4FE9-B6A8-BE1270730B51}.png)
+
+AWS Pricing Calculator: (/calculator.aws). No need to create an aws account. Can export final estimate to csv
+Migration Evaluator: Evaluate cost of on-premise and compare it with cost of cloud. Uses an Agentless Collector(doesnt install any software on your server to collect information) to collect data from on-premise infrastructure to determine on-premise costs
+
+![EC2 VM Import/Export]({A1C91C61-1724-4AE6-A145-07E9A7ED6D41}.png)
+![Cloud Adoption Framework(CAF)]({82C9ED32-CE2B-4659-ADC1-1B1C9B16BF4C}.png)
+
+![AWS Support Plans]({6FF51D8A-F12E-4FA9-8C98-F7369C608544}.png)
+![AWS Support Plans]({B42593A3-C886-4BB7-AD31-78D0636106EA}.png)
+
+Technical Account Manager(TAM): Provides guidance and support on everything about your AWS journey
+![TAM]({2398980C-4883-48F6-876A-352F285F6201}.png)
+
+Consolidated Billing: Its a feature of AWS Organizantions, which allows you to pay for multiple aws accounts with one bill. You can designate one master/root account that pays the charges of all other member accounts in the organization. Can use Cost Explorer in master account to visualize usage and billing. Can combine usage across all account to get volume pricing discounts
+![Volume Discounts]({124F132B-ED45-46BC-9BF5-0ADDD24CCBFA}.png)
+
+![AWS Trusted Advisor]({035B9F82-1032-4B19-A4B8-FDBE9AEC0A32}.png)
+![Free Checks]({DACE07F0-1A88-44F1-87C4-9CC2414A3B0A}.png)
+![Checks under each category]({A901C579-24B7-479A-948C-3AC129F927E9}.png)
+![Checks under each category]({4CDAD440-DCDC-4DA6-9D2A-46B18396C32F}.png)
+
+Service Level Agreement, Service Level Indicator, Service Level Objective:
+![SLA, SLI, SLO]({67DC1E7C-7AB7-4637-95D2-54BA18335A58}.png)
+
+![Service Health Dashboard]({85B1F492-7C7A-4D4B-A031-99BA238129A5}.png)
+![Personal Health Dashboard]({D805ED00-22B3-4E5D-AAA7-08459F49EE15}.png)
+
