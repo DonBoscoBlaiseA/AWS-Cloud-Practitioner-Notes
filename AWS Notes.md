@@ -460,3 +460,17 @@ Service Level Agreement, Service Level Indicator, Service Level Objective:
 ![Service Health Dashboard]({85B1F492-7C7A-4D4B-A031-99BA238129A5}.png)
 ![Personal Health Dashboard]({D805ED00-22B3-4E5D-AAA7-08459F49EE15}.png)
 
+AWS Abuse: When you get abused by AWS owned ip addresses.
+![AWS Abuse]({5940F0D7-58A0-4828-B8C1-13E0B6614925}.png)
+
+AWS Partner Program(APN): Consulting Partner: you help companies utilize AWS, Technology Partner: you build technology ontop of AWS as a service offering. A partner belongs to a specific tier: select, advanced, premier
+
+AWS Budget: Can setup alerts if you exceed or are approaching your defined budget. Create cost, usage or reservation budgets. Can be tracked at monthly, quarterly or yearly levels. 20k budget limit
+![AWS Budget]({06873C47-F9D5-4A14-BF3A-E4329DF6F335}.png)
+AWS Budget Report: Used alongside AWS Budgets to create and send daily, weekly or monthly reports to specific emails
+
+AWS Cost and Usage Reports (CUR): Generate detailed spreadsheet to better analyze and understand your AWS costs. Places reports into S3. Can use Athena to turn the report into queryable database. Can use Quicksight to visualize your billing data as graphs
+![Cost Allocation Tags]({1DBE88B0-2D97-42A4-BBB7-8E640AF67EBE}.png)
+
+![CloudWatch Alarms / Billing Alarms]({1F120C3A-CA2B-4D60-960C-32AD7603111F}.png)
+
